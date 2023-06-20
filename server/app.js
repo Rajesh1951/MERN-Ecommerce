@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const cors=require('cors')
 const router = require('./routes/approutes')
 const mongoConnect = 'mongodb+srv://raj:Jl0F9kB8GH9lWcgv@cluster0.btmzq2e.mongodb.net/?retryWrites=true&w=majority'
 mongoose.connect(mongoConnect)
@@ -11,5 +12,6 @@ app.get('/', (req, res) => {
   res.send("Jai Shri Ram")
 })
 app.use(express.json())
+app.use(cors())
 app.use(router)
 app.listen(800, (e) => console.log('listening @ 800'))

@@ -24,7 +24,7 @@ module.exports.login = async (req, res) => {
 // get list of products
 module.exports.getProducts = async (req, res) => {
   const list = await productModel.find();
-  res.json(list)
+  res.send(list)
 }
 
 // add new product to DB

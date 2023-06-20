@@ -1,8 +1,11 @@
 import React from 'react'
+import Filter from './Filter'
 
 function Home() {
   return (
-    <div>Home</div>
+    <div>
+      <Filter />
+    </div>
   )
 }
 

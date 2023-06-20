@@ -3,25 +3,7 @@ import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon } from '@heroicons/react/20/solid'
 import ProductList from './ProductList'
-import axios from "axios"
-
-const sortOptions = [
-  { name: 'Best Rating', href: '#', current: false },
-  { name: 'Price: Low to High', href: '#', current: false },
-  { name: 'Price: High to Low', href: '#', current: false },
-]
-const filters = [
-  {
-    id: 'category',
-    name: 'Category',
-    options: [
-      { value: 'fashion', label: 'Fashion', checked: false },
-      { value: 'groceries', label: 'Groceries', checked: false },
-      { value: 'gadgets', label: 'Gadgets', checked: false },
-      { value: 'accessories', label: 'Accessories', checked: false },
-    ],
-  }
-]
+import axios, { all } from "axios"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -30,14 +12,49 @@ function classNames(...classes) {
 export default function Filter() {
   const domain = 'http://localhost:800'
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const [allProducts, setAllProducts] = useState([])
   const [products, setProducts] = useState([])
+  const [filterCheck, setFilterCheck] = useState('all');
+  const sortOptions = [
+    { name: 'Best Rating', href: '#', current: false },
+    { name: 'Price: Low to High', href: '#', current: false },
+    { name: 'Price: High to Low', href: '#', current: false },
+  ]
+  const filters = [
+    {
+      id: 'category',
+      name: 'Category',
+      options: [
+        { value: 'all', label: 'All', checked: true },
+        { value: 'Fashion', label: 'Fashion', checked: false },
+        { value: 'groceries', label: 'Groceries', checked: false },
+        { value: 'electronics', label: 'Electronics', checked: false },
+        { value: 'jewellery', label: 'Jewellery', checked: false },
+        { value: 'cooking', label: 'Cooking', checked: false },
+        { value: 'mobiles', label: 'Mobile', checked: false },
+        { value: 'watches', label: 'Watches', checked: false },
+      ],
+    }
+  ]
+
   useEffect(() => {
     const fetch = async () => {
       let { data } = await axios.get(`${domain}/products`);
+      setAllProducts(data);
       setProducts(data);
     }
     fetch();
   }, [])
+  useEffect(() => {
+    console.log('filtered changed', filterCheck)
+    if (filterCheck === 'all') {
+      setProducts(allProducts);
+      return;
+    }
+    setProducts(allProducts.filter((e) => {
+      return (e.category).toLowerCase() === filterCheck.toLowerCase();
+    }))
+  }, [filterCheck])
   return (
     <div className="bg-white">
       <div>
@@ -132,7 +149,7 @@ export default function Filter() {
         </Transition.Root>
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
+          <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-2">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">Products List</h1>
 
             <div className="flex items-center">
@@ -215,7 +232,7 @@ export default function Filter() {
                             </span>
                           </Disclosure.Button>
                         </h3>
-                        <Disclosure.Panel className="pt-6">
+                        <Disclosure.Panel className="pt-1">
                           <div className="space-y-4">
                             {section.options.map((option, optionIdx) => (
                               <div key={option.value} className="flex items-center">
@@ -223,8 +240,9 @@ export default function Filter() {
                                   id={`filter-${section.id}-${optionIdx}`}
                                   name={`${section.id}[]`}
                                   defaultValue={option.value}
-                                  type="checkbox"
+                                  type="radio"
                                   defaultChecked={option.checked}
+                                  onChange={(e) => setFilterCheck(e.target.value)}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                 />
                                 <label

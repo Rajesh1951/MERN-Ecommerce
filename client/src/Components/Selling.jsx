@@ -1,11 +1,9 @@
-import { PhotoIcon } from '@heroicons/react/24/solid'
-
 export default function Selling() {
   return (
     <form>
-      <div className="space-y-12 mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+      <div className=" my-2 space-y-12 mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className=" border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">Sell your Products at Best Price</h2>
+          <h1 className="text-base font-semibold leading-7 text-gray-900">Sell your Products at Best Price</h1>
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
             <div className="sm:col-span-4">
@@ -62,7 +60,6 @@ export default function Selling() {
                 </div>
               </div>
             </div>
-            {/*  */}
             <div className="sm:col-span-4">
               <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
                 Description
@@ -115,7 +112,7 @@ export default function Selling() {
             type="submit"
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Save
+            Sell
           </button>
         </div>
       </div>

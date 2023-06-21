@@ -15,10 +15,11 @@ export default function Filter() {
   const [allProducts, setAllProducts] = useState([])
   const [products, setProducts] = useState([])
   const [filterCheck, setFilterCheck] = useState('all');
+
   const sortOptions = [
-    { name: 'Best Rating', href: '#', current: false },
     { name: 'Price: Low to High', href: '#', current: false },
     { name: 'Price: High to Low', href: '#', current: false },
+    { name: 'Best Rating', href: '#', current: false },
   ]
   const filters = [
     {
@@ -34,7 +35,7 @@ export default function Filter() {
         { value: 'mobiles', label: 'Mobile', checked: false },
         { value: 'watches', label: 'Watches', checked: false },
       ],
-    }
+    },
   ]
 
   useEffect(() => {
@@ -46,15 +47,30 @@ export default function Filter() {
     fetch();
   }, [])
   useEffect(() => {
-    console.log('filtered changed', filterCheck)
     if (filterCheck === 'all') {
       setProducts(allProducts);
-      return;
     }
-    setProducts(allProducts.filter((e) => {
-      return (e.category).toLowerCase() === filterCheck.toLowerCase();
-    }))
+    else {
+      setProducts(allProducts.filter((e) =>
+        (e.category).toLowerCase() === filterCheck.toLowerCase()
+      ))
+    }
   }, [filterCheck])
+  const sortFunc = (sortCheck) => {
+    if (sortCheck === '0') {
+      let sorted = [...products].sort((x, y) => parseFloat(x.price) - parseFloat(y.price))
+      setProducts(sorted)
+    }
+    else if (sortCheck === '1') {
+      let sorted = [...products].sort((x, y) => parseFloat(y.price) - parseFloat(x.price))
+      setProducts(sorted)
+    }
+    else {
+      let sorted = [...products].sort((x, y) => parseFloat(y.rating) - parseFloat(x.rating))
+      setProducts(sorted)
+    }
+  }
+
   return (
     <div className="bg-white">
       <div>
@@ -123,8 +139,9 @@ export default function Filter() {
                                       id={`filter-mobile-${section.id}-${optionIdx}`}
                                       name={`${section.id}[]`}
                                       defaultValue={option.value}
-                                      type="checkbox"
+                                      type="radio"
                                       defaultChecked={option.checked}
+                                      onChange={(e) => setFilterCheck(e.target.value)}
                                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                     />
                                     <label
@@ -163,7 +180,6 @@ export default function Filter() {
                     />
                   </Menu.Button>
                 </div>
-
                 <Transition
                   as={Fragment}
                   enter="transition ease-out duration-100"
@@ -175,11 +191,11 @@ export default function Filter() {
                 >
                   <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
-                      {sortOptions.map((option) => (
+                      {sortOptions.map((option, index) => (
                         <Menu.Item key={option.name}>
                           {({ active }) => (
-                            <a
-                              href={option.href}
+                            <button
+                              onClick={() => sortFunc(String(index))}
                               className={classNames(
                                 option.current ? 'font-medium text-gray-900' : 'text-gray-500',
                                 active ? 'bg-gray-100' : '',
@@ -187,7 +203,7 @@ export default function Filter() {
                               )}
                             >
                               {option.name}
-                            </a>
+                            </button>
                           )}
                         </Menu.Item>
                       ))}
@@ -255,10 +271,12 @@ export default function Filter() {
                             ))}
                           </div>
                         </Disclosure.Panel>
+
                       </>
                     )}
                   </Disclosure>
                 ))}
+
               </form>
 
               {/* Product grid */}

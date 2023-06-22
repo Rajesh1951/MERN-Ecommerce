@@ -3,7 +3,7 @@ import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon } from '@heroicons/react/20/solid'
 import ProductList from './ProductList'
-import axios, { all } from "axios"
+import axios from "axios"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -17,9 +17,9 @@ export default function Filter() {
   const [filterCheck, setFilterCheck] = useState('all');
 
   const sortOptions = [
-    { name: 'Price: Low to High', href: '#', current: false },
-    { name: 'Price: High to Low', href: '#', current: false },
-    { name: 'Best Rating', href: '#', current: false },
+    { name: 'Price: Low to High', current: false },
+    { name: 'Price: High to Low', current: false },
+    { name: 'Best Rating', current: false },
   ]
   const filters = [
     {
@@ -192,10 +192,11 @@ export default function Filter() {
                   <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                       {sortOptions.map((option, index) => (
-                        <Menu.Item key={option.name}>
+                        <Menu.Item key={option.name}
+                          onClick={() => sortFunc(String(index))}
+                        >
                           {({ active }) => (
-                            <button
-                              onClick={() => sortFunc(String(index))}
+                            <a
                               className={classNames(
                                 option.current ? 'font-medium text-gray-900' : 'text-gray-500',
                                 active ? 'bg-gray-100' : '',
@@ -203,7 +204,7 @@ export default function Filter() {
                               )}
                             >
                               {option.name}
-                            </button>
+                            </a>
                           )}
                         </Menu.Item>
                       ))}

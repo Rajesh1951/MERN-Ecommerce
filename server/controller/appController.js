@@ -67,4 +67,14 @@ module.exports.addReview = async (req, res) => {
   res.json(product);
 }
 
-// 
+// get overview
+module.exports.overview = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await productModel.findById(id);
+    res.json(user);
+  }
+  catch (error) {
+    res.json("Product not found")
+  }
+}

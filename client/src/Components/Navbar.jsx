@@ -1,11 +1,14 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useSelector } from 'react-redux'
 
 const navigation = [
   { name: 'Home', href: '/', current: false },
   { name: 'About', href: '/about', current: false },
   { name: 'Contact', href: '/contact', current: false },
+  { name: 'Cart', href: '/cart', current: false },
+  { name: 'Overview', href: '/overview', current: false },
 ]
 
 function classNames(...classes) {
@@ -13,6 +16,7 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const cartItems = useSelector(store => store.cart.items)
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -67,7 +71,7 @@ export default function Navbar() {
                   className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white "
                 >
                   <span className="ml-3 inline-flex items-center rounded-md bg-gray-50 px-1 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
-                    90
+                    {cartItems.length}
                   </span>
                   <ShoppingCartIcon className="h-6 w-6 -mt-2" aria-hidden="true" />
 

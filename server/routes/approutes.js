@@ -7,4 +7,5 @@ router.post('/addproduct', appController.addProduct);
 router.post('/addcomment', appController.addReview);
 router.get('/products', appController.getProducts);
 router.post('/login', appController.login);
+router.get('/overview/:id',appController.overview)
 module.exports = router

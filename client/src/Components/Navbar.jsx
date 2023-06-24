@@ -2,13 +2,15 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useSelector } from 'react-redux'
+import axios from 'axios'
+import { Link, useNavigate } from 'react-router-dom'
+import ProductView from './ProductView'
 
 const navigation = [
   { name: 'Home', href: '/', current: false },
   { name: 'About', href: '/about', current: false },
   { name: 'Contact', href: '/contact', current: false },
   { name: 'Cart', href: '/cart', current: false },
-  { name: 'Overview', href: '/overview', current: false },
 ]
 
 function classNames(...classes) {
@@ -16,7 +18,12 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const navigate = useNavigate()
   const cartItems = useSelector(store => store.cart.items)
+  function handleLogout() {
+    axios.get('http://localhost:800/logout')
+    navigate('/login')
+  }
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -50,9 +57,10 @@ export default function Navbar() {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.href}
+                        element={<ProductView />}
                         className={classNames(
                           item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                           'rounded-md px-3 py-2 text-sm font-medium'
@@ -60,11 +68,12 @@ export default function Navbar() {
                         aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
               </div>
+              {/* {console.log('cartItems', cartItems)} */}
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <button
                   type="button"
@@ -76,7 +85,6 @@ export default function Navbar() {
                   <ShoppingCartIcon className="h-6 w-6 -mt-2" aria-hidden="true" />
 
                 </button>
-
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>
@@ -122,6 +130,7 @@ export default function Navbar() {
                         {({ active }) => (
                           <a
                             href="#"
+                            onClick={() => handleLogout()}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Sign out

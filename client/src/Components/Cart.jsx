@@ -1,36 +1,25 @@
-const products = [
-  {
-    id: 1,
-    name: 'Throwback Hip Bag',
-    href: '#',
-    color: 'Salmon',
-    price: '$90.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-    imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-  },
-  {
-    id: 2,
-    name: 'Medium Stuff Satchel',
-    href: '#',
-    color: 'Blue',
-    price: '$32.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-    imageAlt:
-      'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-  },
-  // More products...
-]
+import { useDispatch, useSelector } from "react-redux"
+import { removeItem } from "../redux/cartSlice"
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function Cart() {
+  // let [price] = useState(0);
+  let price = 0;
+  const products = useSelector(store => store.cart.items)
+  const dispatch = useDispatch()
+  function handleRemove(index) {
+    // if()
+    dispatch(removeItem(index));
+  }
   return (
     <div className="flex mt-8 max-w-7xl  sm:px-6 lg:px-8">
       <div className=" mx-auto w-7/12 ">
         <div className="flow-root">
           <ul role="list" className="-my-6 divide-y divide-gray-200">
-            {products.map((product) => (
-              <li key={product.id} className="flex py-6">
+            {products.map((product, index) => {
+              price += Number((product.price).replace(/[^0-9.-]+/g, ""))
+              return <li key={index} className="flex py-6">
                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                   <img
                     src={product.imageSrc}
@@ -43,7 +32,7 @@ export default function Cart() {
                   <div>
                     <div className="flex justify-between text-base font-medium text-gray-900">
                       <h3>
-                        <a href={product.href}>{product.name}</a>
+                        <Link href={product.href}>{product.name}</Link>
                       </h3>
                       <p className="ml-4">{product.price}</p>
                     </div>
@@ -56,6 +45,7 @@ export default function Cart() {
                       <button
                         type="button"
                         className="font-medium text-indigo-600 hover:text-indigo-500"
+                        onClick={() => handleRemove(index)}
                       >
                         Remove
                       </button>
@@ -63,7 +53,7 @@ export default function Cart() {
                   </div>
                 </div>
               </li>
-            ))}
+            })}
           </ul>
         </div>
       </div>
@@ -73,22 +63,16 @@ export default function Cart() {
           <div className="flex justify-center items-center w-full space-y-4 flex-col border-gray-200 border-b pb-4">
             <div className="flex justify-between  w-full">
               <p className="text-base leading-4 text-gray-800">Subtotal</p>
-              <p className="text-base leading-4 text-gray-600">$56.00</p>
-            </div>
-            <div className="flex justify-between items-center w-full">
-              <p className="text-base leading-4 text-gray-800">
-                Discount
-              </p>
-              <p className="text-base leading-4 text-gray-600">-$28.00 (50%)</p>
+              <p className="text-base leading-4 text-gray-600">₹{price}.00</p>
             </div>
             <div className="flex justify-between items-center w-full">
               <p className="text-base leading-4 text-gray-800">Shipping</p>
-              <p className="text-base leading-4 text-gray-600">$8.00</p>
+              <p className="text-base leading-4 text-gray-600">₹100.00</p>
             </div>
           </div>
           <div className="flex justify-between items-center w-full">
             <p className="text-base font-semibold leading-4 text-gray-800">Total</p>
-            <p className="text-base font-semibold leading-4 text-gray-600">$36.00</p>
+            <p className="text-base font-semibold leading-4 text-gray-600">₹{price + 100}.00</p>
           </div>
         </div>
       </div>

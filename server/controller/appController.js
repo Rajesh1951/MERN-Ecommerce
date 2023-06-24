@@ -35,6 +35,7 @@ module.exports.login = async (req, res) => {
       secure: false,
       httpOnly: true
     });
+    // console.log(token)
     res.json(user);
   }
   catch (error) {
@@ -42,6 +43,10 @@ module.exports.login = async (req, res) => {
   }
 }
 
+module.exports.logout = (req, res) => {
+  res.cookie('jwt', ' ', { maxAge: 1 })
+  res.send('logged out')
+}
 // get list of products
 module.exports.getProducts = async (req, res) => {
   const list = await productModel.find();

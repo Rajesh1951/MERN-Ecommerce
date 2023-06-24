@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom";
+import ProductView from "./ProductView";
 
-function ProductList({ products }) { 
+function ProductList({ products }) {
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 pb-3 pt-0 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
@@ -16,10 +18,10 @@ function ProductList({ products }) {
               <div className="mt-4 flex justify-between">
                 <div>
                   <h3 className="text-sm text-gray-700">
-                    <a href={`/overview/${product._id}`}>
+                    <Link to={`/overview/${product._id}`} element={<ProductView />}>
                       <span aria-hidden="true" className="absolute inset-0" />
                       {product.name}
-                    </a>
+                    </Link>
                   </h3>
                   <p className="mt-1 text-sm text-gray-500">{product.category}</p>
                 </div>

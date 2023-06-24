@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
+import { addItem } from '../redux/cartSlice'
+import { useDispatch } from 'react-redux'
 const reviews = { href: '#', average: 4, totalCount: 117 }
 
 function classNames(...classes) {
@@ -24,15 +26,30 @@ export default function ProductView() {
     }
     fetch();
   }, [])
+
+  // redux 
+  const dispatch = useDispatch();
+  const handleAddItem = () => {
+    dispatch(addItem({
+      id: id,
+      name: product.name,
+      href: `/overview/${id}`,
+      price: product.price,
+      quantity: 1,
+      imageSrc: product.images[0],
+      imageAlt: product.name,
+    }))
+
+  }
   return (
     <div className="bg-white">
       <div className="pt-6">
         <nav aria-label="Breadcrumb">
           <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
             <li className="text-sm">
-              <a aria-current="page" className="font-medium text-gray-500 hover:text-gray-600">
+              <Link aria-current="page" className="font-medium text-gray-500 hover:text-gray-600">
                 {product.name}
-              </a>
+              </Link>
             </li>
           </ol>
         </nav>
@@ -40,12 +57,6 @@ export default function ProductView() {
           <div className="flex justify-center items-center rounded-lg">
             <img
               src={product.images[0]}
-              alt="image"
-            />
-          </div>
-          <div className="flex justify-center items-center rounded-lg">
-            <img
-              src={product.images[1]}
               alt="image"
             />
           </div>
@@ -85,14 +96,15 @@ export default function ProductView() {
               </div>
             </div>
 
-            <form className="mt-10">
+            <div className="mt-10">
               <button
                 type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                onClick={() => handleAddItem()}
               >
-                Add to bag
+                Add to Cart
               </button>
-            </form>
+            </div>
           </div>
           <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
             <div>

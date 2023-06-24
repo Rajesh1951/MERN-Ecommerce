@@ -7,6 +7,8 @@ import Cart from './Components/Cart';
 import { Provider } from 'react-redux';
 import store from './redux/store'
 import ProductView from "./Components/ProductView"
+import axios from 'axios'
+axios.defaults.withCredentials = true;
 function App() {
   return (
     <Provider store={store}>

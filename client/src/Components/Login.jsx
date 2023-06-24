@@ -27,6 +27,7 @@ export default function Login() {
       alert(data?.error)
     }
     else {
+      // alert('login succesful')
       navigate('/')
     }
     console.log(data?.error);

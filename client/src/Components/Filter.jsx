@@ -27,12 +27,12 @@ export default function Filter() {
       name: 'Category',
       options: [
         { value: 'all', label: 'All', checked: true },
-        { value: 'Fashion', label: 'Fashion', checked: false },
+        { value: 'fashion', label: 'Fashion', checked: false },
         { value: 'groceries', label: 'Groceries', checked: false },
         { value: 'electronics', label: 'Electronics', checked: false },
         { value: 'jewellery', label: 'Jewellery', checked: false },
         { value: 'cooking', label: 'Cooking', checked: false },
-        { value: 'mobiles', label: 'Mobile', checked: false },
+        { value: 'mobile', label: 'Mobile', checked: false },
         { value: 'watches', label: 'Watches', checked: false },
       ],
     },
@@ -58,11 +58,11 @@ export default function Filter() {
   }, [filterCheck])
   const sortFunc = (sortCheck) => {
     if (sortCheck === '0') {
-      let sorted = [...products].sort((x, y) => parseFloat(x.price) - parseFloat(y.price))
+      let sorted = [...products].sort((x, y) => Number((x.price).replace(/[^0-9.-]+/g, "")) - Number((y.price).replace(/[^0-9.-]+/g, "")))
       setProducts(sorted)
     }
     else if (sortCheck === '1') {
-      let sorted = [...products].sort((x, y) => parseFloat(y.price) - parseFloat(x.price))
+      let sorted = [...products].sort((x, y) => Number((y.price).replace(/[^0-9.-]+/g, "")) - Number((x.price).replace(/[^0-9.-]+/g, "")))
       setProducts(sorted)
     }
     else {

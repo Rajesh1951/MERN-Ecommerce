@@ -33,7 +33,7 @@ const productSchema = new mongoose.Schema(
     },
     verified: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     rating: {
       type: String,

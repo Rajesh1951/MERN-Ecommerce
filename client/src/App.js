@@ -8,21 +8,27 @@ import { Provider } from 'react-redux';
 import store from './redux/store'
 import ProductView from "./Components/ProductView"
 import axios from 'axios'
+import RequiredAuth from './Components/RequiredAuth';
+import { MyProvider } from './contexts/AuthContext';
+import Payment from './Components/Payment';
 axios.defaults.withCredentials = true;
 function App() {
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path='/' element={< Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/sell' element={<Selling />} />
-          <Route path='/cart' element={<Cart />} />
-          <Route path='/overview/:id' element={<ProductView />} />
-        </Routes>
-      </BrowserRouter>
-    </Provider>
+    <MyProvider>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route path='/' element={< Home />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/sell' element={<Selling />} />
+            <Route path='/cart' element={<RequiredAuth><Cart /></RequiredAuth>} />
+            <Route path='/payment' element={<RequiredAuth><Payment /></RequiredAuth>} />
+            <Route path='/overview/:id' element={<RequiredAuth><ProductView /></RequiredAuth>} />
+          </Routes>
+        </BrowserRouter>
+      </Provider>
+    </MyProvider>
   );
 }
 

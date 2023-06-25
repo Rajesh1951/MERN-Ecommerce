@@ -1,8 +1,11 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import MyContext from "../contexts/AuthContext";
+
 export default function Login() {
   const navigate = useNavigate();
+  const { loggedIn } = useContext(MyContext);
   const domain = 'http://localhost:800'
   const [credential, setCredential] = useState({
     email: '',
@@ -28,6 +31,7 @@ export default function Login() {
     }
     else {
       // alert('login succesful')
+      loggedIn()
       navigate('/')
     }
     console.log(data?.error);

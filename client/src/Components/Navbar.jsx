@@ -22,7 +22,7 @@ export default function Navbar() {
   const cartItems = useSelector(store => store.cart.items)
   function handleLogout() {
     axios.get('http://localhost:800/logout')
-    navigate('/login')
+    navigate('/')
   }
   return (
     <Disclosure as="nav" className="bg-gray-800">

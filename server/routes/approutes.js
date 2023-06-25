@@ -9,4 +9,5 @@ router.get('/products', appController.getProducts);
 router.post('/login', appController.login);
 router.get('/logout', appController.logout);
 router.get('/overview/:id',appController.overview)
+router.get('/loggedIn',appController.isLoggedin)
 module.exports = router

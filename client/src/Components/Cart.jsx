@@ -2,15 +2,17 @@ import { useDispatch, useSelector } from "react-redux"
 import { removeItem } from "../redux/cartSlice"
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import Payment from "./Payment";
 
 export default function Cart() {
-  // let [price] = useState(0);
   let price = 0;
   const products = useSelector(store => store.cart.items)
   const dispatch = useDispatch()
   function handleRemove(index) {
-    // if()
     dispatch(removeItem(index));
+  }
+  function handleBuy() {
+
   }
   return (
     <div className="flex mt-8 max-w-7xl  sm:px-6 lg:px-8">
@@ -73,6 +75,13 @@ export default function Cart() {
           <div className="flex justify-between items-center w-full">
             <p className="text-base font-semibold leading-4 text-gray-800">Total</p>
             <p className="text-base font-semibold leading-4 text-gray-600">₹{price + 100}.00</p>
+          </div>
+          <div className="flex justify-between items-center w-full">
+            <Link to='/payment' element={<Payment />}>
+              <button onClick={() => handleBuy()} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Buy
+              </button>
+            </Link>
           </div>
         </div>
       </div>

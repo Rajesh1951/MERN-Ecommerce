@@ -83,3 +83,22 @@ module.exports.overview = async (req, res) => {
     res.json("Product not found")
   }
 }
+
+// get loggedIn status
+module.exports.isLoggedin = async (req, res) => {
+  const token = req.cookies?.jwt;
+  if (token) {
+    jsonwebtoken.verify(token, 'secret', (error, decodeToken) => {
+      if (error) {
+        console.log(error)
+        res.send(false)
+      }
+      else {
+        res.send(true)
+      }
+    })
+  }
+  else {
+    res.send(false)
+  }
+}

@@ -4,7 +4,6 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon } from '@heroicons/react/20/solid'
 import ProductList from './ProductList'
 import axios from "axios"
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }

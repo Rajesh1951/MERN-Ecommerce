@@ -1,7 +1,9 @@
 const userModel = require('../models/user')
 const productModel = require('../models/products')
+const orderModel = require('../models/orders')
 const bcrypt = require('bcrypt')
 const jsonwebtoken = require('jsonwebtoken')
+const axios = require('axios')
 
 const createToken = (id) => {
   return jsonwebtoken.sign({ id }, 'secret')
@@ -102,3 +104,67 @@ module.exports.isLoggedin = async (req, res) => {
     res.send(false)
   }
 }
+
+// create order
+module.exports.createOrder = async (req, res) => {
+  const { orderName, price, productIds, address } = req.body;
+  const { jwt } = req.cookies;
+  const decodedToken = jsonwebtoken.decode(jwt);
+  const id = decodedToken.id;
+  const data = new orderModel({
+    orderName, price, date: new Date().getTime(), userId: id, productIds, deliveredAddress: address
+  })
+  const result = await data.save();
+  res.json(result)
+}
+
+// orders 
+// module.exports.orders = async (req, res) => {
+//   const { jwt } = req.cookies;
+//   const decodedToken = jsonwebtoken.decode(jwt);
+//   const id = decodedToken.id;
+//   const ordersList = await orderModel.find({ userId: id });
+//   const promises = ordersList.map(async (ele) => {
+//     let l = []
+//     const productPromises = ele.productIds.map(async (id) => {
+//       return { data } = await axios.get(`http://localhost:800/overview/${id}`)
+//     })
+
+//     // console.log(productPromises)
+//     productPromises.then((result) => {
+//       return {
+//         orderId: ele._id,
+//         products: result
+//       }
+//     })
+
+//     Promise.all(productPromises)
+//       .then((result) => {
+//         console.log(result.data)
+//         l.push(result.data)
+//       })
+//   })
+//   console.log(promises)
+// }
+module.exports.orders = async (req, res) => {
+  const { jwt } = req.cookies;
+  const decodedToken = jsonwebtoken.decode(jwt);
+  const id = decodedToken.id;
+  const ordersList = await orderModel.find({ userId: id });
+  const promises = ordersList.map(async (ele) => {
+    const productPromises = ele.productIds.map(async (id) => {
+      const response = await axios.get(`http://localhost:800/overview/${id}`);
+      return response.data;
+    });
+    const products = await Promise.all(productPromises);
+    return {
+      orderId: ele._id,
+      products: products,
+      price: ele.price,
+      name: ele.orderName,
+      date:ele.date
+    };
+  });
+  const results = await Promise.all(promises);
+  res.json(results);
+};

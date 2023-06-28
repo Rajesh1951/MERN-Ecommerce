@@ -11,6 +11,7 @@ import axios from 'axios'
 import RequiredAuth from './Components/RequiredAuth';
 import { MyProvider } from './contexts/AuthContext';
 import Payment from './Components/Payment';
+import OrderHistoryPage from './Components/OrderHistory';
 axios.defaults.withCredentials = true;
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path='/cart' element={<RequiredAuth><Cart /></RequiredAuth>} />
             <Route path='/payment' element={<RequiredAuth><Payment /></RequiredAuth>} />
             <Route path='/overview/:id' element={<RequiredAuth><ProductView /></RequiredAuth>} />
+            <Route path='/orders' element={<RequiredAuth><OrderHistoryPage /></RequiredAuth>} />
           </Routes>
         </BrowserRouter>
       </Provider>

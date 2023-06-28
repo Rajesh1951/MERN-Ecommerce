@@ -9,7 +9,6 @@ export const MyProvider = ({ children }) => {
   const loggedIn = async () => {
     // Perform login logic here
     const result = await axios.get('http://localhost:800/loggedIn');
-    console.log('loggedIn', result)
     setLoggedInStatus(result.data);
   };
   useEffect(() => {

@@ -8,6 +8,8 @@ router.post('/addcomment', appController.addReview);
 router.get('/products', appController.getProducts);
 router.post('/login', appController.login);
 router.get('/logout', appController.logout);
-router.get('/overview/:id',appController.overview)
-router.get('/loggedIn',appController.isLoggedin)
+router.get('/overview/:id', appController.overview);
+router.get('/orders', appController.orders);
+router.get('/loggedIn', appController.isLoggedin);
+router.post('/create', appController.createOrder);
 module.exports = router

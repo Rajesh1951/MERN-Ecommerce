@@ -15,7 +15,7 @@ export default function Cart() {
 
   }
   return (
-    <div className="flex mt-8 max-w-7xl  sm:px-6 lg:px-8">
+    <div className="flex mt-24 max-w-7xl  sm:px-6 lg:px-8 ">
       <div className=" mx-auto w-7/12 ">
         <div className="flow-root">
           <ul role="list" className="-my-6 divide-y divide-gray-200">
@@ -32,7 +32,7 @@ export default function Cart() {
 
                 <div className="ml-4 flex flex-1 flex-col">
                   <div>
-                    <div className="flex justify-between text-base font-medium text-gray-900">
+                    <div className="flex justify-between text-base font-medium text-gray-300">
                       <h3>
                         <Link href={product.href}>{product.name}</Link>
                       </h3>
@@ -41,12 +41,12 @@ export default function Cart() {
                     <p className="mt-1 text-sm text-gray-500">{product.color}</p>
                   </div>
                   <div className="flex flex-1 items-end justify-between text-sm">
-                    <p className="text-gray-500">Qty {product.quantity}</p>
+                    <p className="text-gray-400">Qty {product.quantity}</p>
 
                     <div className="flex">
                       <button
                         type="button"
-                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                        className="font-medium text-blue-400 hover:text-indigo-500"
                         onClick={() => handleRemove(index)}
                       >
                         Remove
@@ -60,21 +60,21 @@ export default function Cart() {
         </div>
       </div>
       <div className="w-3/12">
-        <div className="flex flex-col px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-50 space-y-6   ">
-          <h3 className="text-xl font-semibold leading-5 text-gray-800">Summary</h3>
-          <div className="flex justify-center items-center w-full space-y-4 flex-col border-gray-200 border-b pb-4">
+        <div className="flex flex-col px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-800 space-y-6   ">
+          <h3 className="text-xl font-semibold leading-5 text-gray-300">Summary</h3>
+          <div className="flex justify-center items-center w-full s2ace-y-4 flex-col border-gray-200 border-b pb-4">
             <div className="flex justify-between  w-full">
-              <p className="text-base leading-4 text-gray-800">Subtotal</p>
-              <p className="text-base leading-4 text-gray-600">₹{price}.00</p>
+              <p className="text-base leading-4 text-gray-300">Subtotal</p>
+              <p className="text-base leading-4 text-gray-200">₹{price}.00</p>
             </div>
             <div className="flex justify-between items-center w-full">
-              <p className="text-base leading-4 text-gray-800">Shipping</p>
-              <p className="text-base leading-4 text-gray-600">₹100.00</p>
+              <p className="text-base leading-4 text-gray-300">Shipping</p>
+              <p className="text-base leading-4 text-gray-200">₹100.00</p>
             </div>
           </div>
           <div className="flex justify-between items-center w-full">
-            <p className="text-base font-semibold leading-4 text-gray-800">Total</p>
-            <p className="text-base font-semibold leading-4 text-gray-600">₹{price + 100}.00</p>
+            <p className="text-base font-semibold leading-4 text-gray-300">Total</p>
+            <p className="text-base font-semibold leading-4 text-gray-200">₹{price + 100}.00</p>
           </div>
           <div className="flex justify-between items-center w-full">
             <Link to='/payment' element={<Payment />}>

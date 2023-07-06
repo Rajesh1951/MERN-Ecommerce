@@ -5,8 +5,18 @@ const bcrypt = require('bcrypt')
 const jsonwebtoken = require('jsonwebtoken')
 const axios = require('axios')
 
+// create token
 const createToken = (id) => {
   return jsonwebtoken.sign({ id }, 'secret')
+}
+
+// handle errors
+const handleErrors=(error)=>{
+// E11000 duplicate key error collection: test.users index: email_1 dup key: { email: "asd@gmail.com" }
+  if(error?.code===11000){
+    return { error:"Email is registered"}
+  }
+  
 }
 // user signup
 module.exports.signup = async (req, res) => {
@@ -19,10 +29,11 @@ module.exports.signup = async (req, res) => {
     })
     userData.password = bcrypt.hashSync(userData.password, 10);
     const saved = await userData.save();
+    res.cookie('jwt',createToken(saved._id))
     res.json({ saved })
   }
   catch (error) {
-    res.json({ "error": error.message })
+    res.json(handleErrors(error))
   }
 }
 
@@ -118,34 +129,6 @@ module.exports.createOrder = async (req, res) => {
   res.json(result)
 }
 
-// orders 
-// module.exports.orders = async (req, res) => {
-//   const { jwt } = req.cookies;
-//   const decodedToken = jsonwebtoken.decode(jwt);
-//   const id = decodedToken.id;
-//   const ordersList = await orderModel.find({ userId: id });
-//   const promises = ordersList.map(async (ele) => {
-//     let l = []
-//     const productPromises = ele.productIds.map(async (id) => {
-//       return { data } = await axios.get(`http://localhost:800/overview/${id}`)
-//     })
-
-//     // console.log(productPromises)
-//     productPromises.then((result) => {
-//       return {
-//         orderId: ele._id,
-//         products: result
-//       }
-//     })
-
-//     Promise.all(productPromises)
-//       .then((result) => {
-//         console.log(result.data)
-//         l.push(result.data)
-//       })
-//   })
-//   console.log(promises)
-// }
 module.exports.orders = async (req, res) => {
   const { jwt } = req.cookies;
   const decodedToken = jsonwebtoken.decode(jwt);

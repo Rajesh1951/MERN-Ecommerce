@@ -25,10 +25,10 @@ function Payment() {
   }
   async function handlePay() {
     const result = await axios.post(`${domain}/create`, { ...details, productIds, price })
-    console.log('result', result)
+    alert("Order is Succesfull")
   }
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 mt-16">
       <h1 className="text-2xl font-bold mb-4">Payment Page</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -38,13 +38,13 @@ function Payment() {
             <label htmlFor="orderName" className="block mb-1">
               Order Name:
             </label>
-            <input name="orderName" type="text" id="orderName" className="w-full border rounded p-2" onChange={(e) => handleChange(e)} />
+            <input name="orderName" type="text" id="orderName" className="text-gray-800 w-full border rounded p-2" onChange={(e) => handleChange(e)} />
           </div>
           <div className="mb-4">
             <label htmlFor="address" className="block mb-1">
               Address:
             </label>
-            <input name="address" type="text" id="address" className="w-full border rounded p-2" onChange={(e) => handleChange(e)} />
+            <input name="address" type="text" id="address" className="text-gray-800 w-full border rounded p-2" onChange={(e) => handleChange(e)} />
           </div>
 
         </div>
@@ -55,14 +55,14 @@ function Payment() {
             <label htmlFor="cardNumber" className="block mb-1">
               Card Number:
             </label>
-            <input type="text" id="cardNumber" className="w-full border rounded p-2" />
+            <input type="text" id="cardNumber" className="text-gray-800 w-full border rounded p-2" />
           </div>
 
           <div className="mb-4">
             <label htmlFor="expiryDate" className="block mb-1">
               Expiry Date:
             </label>
-            <input type="text" id="expiryDate" className="w-full border rounded p-2" />
+            <input type="text" id="expiryDate" className="text-gray-800 w-full border rounded p-2" />
           </div>
         </div>
       </div>

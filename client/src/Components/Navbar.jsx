@@ -1,10 +1,11 @@
-import { Fragment } from 'react'
+import { Fragment, useContext } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import ProductView from './ProductView'
+import MyContext from '../contexts/AuthContext'
 
 const navigation = [
   { name: 'Home', href: '/', current: false },
@@ -19,14 +20,20 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const { loggedInStatus } = useContext(MyContext);
   const navigate = useNavigate()
   const cartItems = useSelector(store => store.cart.items)
   function handleLogout() {
+    if (loggedInStatus === false) {
+      navigate('/login')
+      return;
+    }
     axios.get('http://localhost:800/logout')
+    alert("Logged out!")
     navigate('/')
   }
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className="fixed left-0 right-0 top-0 z-10 bg-gray-800 h-16">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -134,7 +141,7 @@ export default function Navbar() {
                             onClick={() => handleLogout()}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Sign out
+                            {loggedInStatus ? 'Sign out' : 'Login'}
                           </a>
                         )}
                       </Menu.Item>

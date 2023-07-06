@@ -71,7 +71,7 @@ export default function Filter() {
   }
 
   return (
-    <div className="bg-white">
+    <div className="bg-gray-900 mt-16">
       <div>
         {/* Mobile filter dialog */}
         <Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -98,12 +98,12 @@ export default function Filter() {
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
+                <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-gray-900 py-4 pb-12 shadow-xl">
                   <div className="flex items-center justify-between px-4">
-                    <h2 className="text-lg font-medium text-gray-900">Filters</h2>
+                    <h2 className="text-lg font-medium text-gray-300">Filters</h2>
                     <button
                       type="button"
-                      className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
+                      className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md  bg-gray-900 p-2 text-gray-400"
                       onClick={() => setMobileFiltersOpen(false)}
                     >
                       <span className="sr-only">Close menu</span>
@@ -115,12 +115,12 @@ export default function Filter() {
                   <form className="mt-4 border-t border-gray-200">
                     <h3 className="sr-only">Categories</h3>
                     {filters.map((section) => (
-                      <Disclosure as="div" key={section.id} className="border-t border-gray-200 px-4 py-6">
+                      <Disclosure as="div" key={section.id} className="border-t border-gray-200 px-4 py-6 bg-gray-900">
                         {({ open }) => (
                           <>
-                            <h3 className="-mx-2 -my-3 flow-root">
-                              <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                                <span className="font-medium text-gray-900">{section.name}</span>
+                            <h3 className="-mx-2 -my-3 flow-root bg-gray-900">
+                              <Disclosure.Button className="flex w-full items-center justify-between bg-gray-900 px-2 py-3 text-gray-300 hover:text-gray-200">
+                                <span className="font-medium ">{section.name}</span>
                                 <span className="ml-6 flex items-center">
                                   {open ? (
                                     <MinusIcon className="h-5 w-5" aria-hidden="true" />
@@ -166,15 +166,15 @@ export default function Filter() {
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-2">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900">Products List</h1>
+            <h1 className="text-4xl font-bold tracking-tight text-gray-300">Products List</h1>
 
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
                 <div>
-                  <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
+                  <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-300 hover:text-gray-200">
                     Sort
                     <ChevronDownIcon
-                      className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                      className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-300 group-hover:text-gray-200"
                       aria-hidden="true"
                     />
                   </Menu.Button>
@@ -188,7 +188,7 @@ export default function Filter() {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-gray-900 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                       {sortOptions.map((option, index) => (
                         <Menu.Item key={option.name}
@@ -197,8 +197,8 @@ export default function Filter() {
                           {({ active }) => (
                             <a
                               className={classNames(
-                                option.current ? 'font-medium text-gray-900' : 'text-gray-500',
-                                active ? 'bg-gray-100' : '',
+                                option.current ? 'font-medium text-gray-300' : 'text-gray-300',
+                                active ? 'bg-gray-800' : '',
                                 'block px-4 py-2 text-sm'
                               )}
                             >
@@ -237,8 +237,8 @@ export default function Filter() {
                     {({ open }) => (
                       <>
                         <h3 className="-my-3 flow-root">
-                          <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                            <span className="font-medium text-gray-900">{section.name}</span>
+                          <Disclosure.Button className="flex w-full items-center justify-between  bg-gray-900 py-3 text-sm text-gray-400 hover:text-gray-500">
+                            <span className="font-medium text-gray-300">{section.name}</span>
                             <span className="ml-6 flex items-center">
                               {open ? (
                                 <MinusIcon className="h-5 w-5" aria-hidden="true" />
@@ -263,7 +263,7 @@ export default function Filter() {
                                 />
                                 <label
                                   htmlFor={`filter-${section.id}-${optionIdx}`}
-                                  className="ml-3 text-sm text-gray-600"
+                                  className="ml-3 text-sm text-gray-300"
                                 >
                                   {option.label}
                                 </label>

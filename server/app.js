@@ -19,7 +19,8 @@ app.use(cookieParser())
 app.use(express.urlencoded({ urlencoded: true }));
 
 const corsConfig = {
-  origin: true,
+  origin: ["https://mern-ecommerce-api-mauve.vercel.app/"],
+  methods:["POST","GET"],
   credentials: true,
 };
 app.use(cors(corsConfig));

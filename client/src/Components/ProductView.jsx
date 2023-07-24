@@ -11,7 +11,7 @@ function classNames(...classes) {
 
 export default function ProductView() {
   const { id } = useParams()
-  const domain = 'http://localhost:800'
+  const domain = 'https://mern-ecommerce-3vx2.onrender.com'
   const [product, setProduct] = useState({
     name: '',
     price: '',

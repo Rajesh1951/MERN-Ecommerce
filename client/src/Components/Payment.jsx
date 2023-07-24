@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 
 function Payment() {
-  const domain = `http://localhost:800`
+  const domain = 'https://mern-ecommerce-3vx2.onrender.com'
   const cart = useSelector(store => store.cart.items);
   let price = 100;
   const productIds = cart.map(e => {

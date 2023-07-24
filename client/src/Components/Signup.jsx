@@ -6,7 +6,7 @@ import MyContext from "../contexts/AuthContext";
 export default function Signup() {
   const navigate = useNavigate();
   const { loggedIn } = useContext(MyContext);
-  const domain = 'http://localhost:800'
+  const domain = 'https://mern-ecommerce-3vx2.onrender.com'
   const [credential, setCredential] = useState({
     name: '',
     email: '',

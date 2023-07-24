@@ -23,7 +23,7 @@ function OrderHistory() {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-  const domain = `http://localhost:800`
+  const domain = 'https://mern-ecommerce-3vx2.onrender.com'
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     // Fetch order details from the backend

@@ -28,7 +28,7 @@ export default function Navbar() {
       navigate('/login')
       return;
     }
-    axios.get('http://localhost:800/logout')
+    axios.get('https://mern-ecommerce-3vx2.onrender.com/logout')
     alert("Logged out!")
     navigate('/')
   }

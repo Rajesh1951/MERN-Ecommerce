@@ -9,7 +9,7 @@ function classNames(...classes) {
 }
 
 export default function Filter() {
-  const domain = 'http://localhost:800'
+  const domain = 'https://mern-ecommerce-3vx2.onrender.com'
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const [allProducts, setAllProducts] = useState([])
   const [products, setProducts] = useState([])

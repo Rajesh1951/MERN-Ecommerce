@@ -7,7 +7,7 @@ export const MyProvider = ({ children }) => {
   const [loggedInStatus, setLoggedInStatus] = React.useState(null);
 
   const loggedIn = async () => {
-    const result = await axios.get('http://localhost:800/loggedIn');
+    const result = await axios.get('https://mern-ecommerce-3vx2.onrender.com//loggedIn');
     setLoggedInStatus(result.data);
   };
   useEffect(() => {

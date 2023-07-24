@@ -132,12 +132,13 @@ module.exports.createOrder = async (req, res) => {
 module.exports.orders = async (req, res) => {
   try {
     const { jwt } = req.cookies;
+    const backend='http://localhost:800'
     const decodedToken = jsonwebtoken.decode(jwt);
     const id = decodedToken.id;
     const ordersList = await orderModel.find({ userId: id });
     const promises = ordersList.map(async (ele) => {
       const productPromises = ele.productIds.map(async (id) => {
-        const response = await axios.get(`http://localhost:800/overview/${id}`);
+        const response = await axios.get(`${backend}/overview/${id}`);
         return response.data;
       });
       const products = await Promise.all(productPromises);

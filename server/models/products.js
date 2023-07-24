@@ -27,7 +27,6 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     sellingUser: {
-      // id of seller
       type: String,
       required: true,
     },

@@ -2,3 +2,4 @@
 /client/node_modules
 client/NR-Routing.js
 client/NR-Optimizing.js
+.env

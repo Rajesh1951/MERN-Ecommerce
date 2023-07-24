@@ -19,6 +19,7 @@ export default function Cart() {
       <div className=" mx-auto w-7/12 ">
         <div className="flow-root">
           <ul role="list" className="-my-6 divide-y divide-gray-200">
+          <h1 className="text-4xl font-bold tracking-tight text-gray-300">Your Cart</h1>
             {products.map((product, index) => {
               price += Number((product.price).replace(/[^0-9.-]+/g, ""))
               return <li key={index} className="flex py-6">

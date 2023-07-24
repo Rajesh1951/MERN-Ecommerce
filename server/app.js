@@ -18,13 +18,13 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({ urlencoded: true }));
 
-const corsConfig = {
-  origin: ["https://mern-ecommerce-api-mauve.vercel.app/"],
-  methods:["POST","GET"],
-  credentials: true,
-};
-app.use(cors(corsConfig));
-app.options('*', cors(corsConfig));
+const corsOptions ={
+  origin:'http://localhost:3000', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200
+}
+app.use(cors(corsOptions));
+// app.options('*', cors(corsConfig));
 // async function fetch() {
 //   const { data } = await axios.get('http://localhost:800/products');
 //   console.log(data)

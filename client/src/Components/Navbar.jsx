@@ -62,7 +62,7 @@ export default function Navbar() {
                     alt="Your Company"
                   />
                 </div>
-                <div className="hidden sm:ml-6 sm:block">
+                <div className="hidden sm:ml-6 sm:block">                  
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
                       <Link
@@ -90,7 +90,7 @@ export default function Navbar() {
                   <span className="ml-3 inline-flex items-center rounded-md bg-gray-50 px-1 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
                     {cartItems.length}
                   </span>
-                  <ShoppingCartIcon className="h-6 w-6 -mt-2" aria-hidden="true" />
+                  <Link to='/cart' ><ShoppingCartIcon className="h-6 w-6 -mt-2" aria-hidden="true" /></Link>
 
                 </button>
                 {/* Profile dropdown */}

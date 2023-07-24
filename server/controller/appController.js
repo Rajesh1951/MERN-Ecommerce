@@ -11,12 +11,12 @@ const createToken = (id) => {
 }
 
 // handle errors
-const handleErrors=(error)=>{
-// E11000 duplicate key error collection: test.users index: email_1 dup key: { email: "asd@gmail.com" }
-  if(error?.code===11000){
-    return { error:"Email is registered"}
+const handleErrors = (error) => {
+  // E11000 duplicate key error collection: test.users index: email_1 dup key: { email: "asd@gmail.com" }
+  if (error?.code === 11000) {
+    return { error: "Email is registered" }
   }
-  
+
 }
 // user signup
 module.exports.signup = async (req, res) => {
@@ -29,7 +29,7 @@ module.exports.signup = async (req, res) => {
     })
     userData.password = bcrypt.hashSync(userData.password, 10);
     const saved = await userData.save();
-    res.cookie('jwt',createToken(saved._id))
+    res.cookie('jwt', createToken(saved._id))
     res.json({ saved })
   }
   catch (error) {
@@ -130,24 +130,29 @@ module.exports.createOrder = async (req, res) => {
 }
 
 module.exports.orders = async (req, res) => {
-  const { jwt } = req.cookies;
-  const decodedToken = jsonwebtoken.decode(jwt);
-  const id = decodedToken.id;
-  const ordersList = await orderModel.find({ userId: id });
-  const promises = ordersList.map(async (ele) => {
-    const productPromises = ele.productIds.map(async (id) => {
-      const response = await axios.get(`http://localhost:800/overview/${id}`);
-      return response.data;
+  try {
+    const { jwt } = req.cookies;
+    const decodedToken = jsonwebtoken.decode(jwt);
+    const id = decodedToken.id;
+    const ordersList = await orderModel.find({ userId: id });
+    const promises = ordersList.map(async (ele) => {
+      const productPromises = ele.productIds.map(async (id) => {
+        const response = await axios.get(`http://localhost:800/overview/${id}`);
+        return response.data;
+      });
+      const products = await Promise.all(productPromises);
+      return {
+        orderId: ele._id,
+        products: products,
+        price: ele.price,
+        name: ele.orderName,
+        date: ele.date
+      };
     });
-    const products = await Promise.all(productPromises);
-    return {
-      orderId: ele._id,
-      products: products,
-      price: ele.price,
-      name: ele.orderName,
-      date:ele.date
-    };
-  });
-  const results = await Promise.all(promises);
-  res.json(results);
+    const results = await Promise.all(promises);
+    res.json(results);
+  }
+  catch(error){
+    res.json(error)
+  }
 };

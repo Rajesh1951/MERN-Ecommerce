@@ -132,7 +132,7 @@ module.exports.createOrder = async (req, res) => {
 module.exports.orders = async (req, res) => {
   try {
     const { jwt } = req.cookies;
-    const backend='http://localhost:800'
+    const domain = 'https://mern-ecommerce-3vx2.onrender.com'
     const decodedToken = jsonwebtoken.decode(jwt);
     const id = decodedToken.id;
     const ordersList = await orderModel.find({ userId: id });

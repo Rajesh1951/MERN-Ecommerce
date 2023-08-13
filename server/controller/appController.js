@@ -44,6 +44,7 @@ module.exports.login = async (req, res) => {
     const user = await userModel.login(email, password);
     const token = createToken(user._id);
     res.cookie('jwt', token, {
+      domain: 'beautiful-zuccutto-f44055.netlify.app',
       sameSite: 'none',
       secure: true,
       httpOnly: true

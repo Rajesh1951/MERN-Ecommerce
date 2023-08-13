@@ -29,7 +29,12 @@ module.exports.signup = async (req, res) => {
     })
     userData.password = bcrypt.hashSync(userData.password, 10);
     const saved = await userData.save();
-    res.cookie('jwt', createToken(saved._id))
+    res.cookie('jwt', createToken(saved._id),{
+      domain: 'beautiful-zuccutto-f44055.netlify.app',
+      sameSite: 'none',
+      secure: true,
+      httpOnly: true
+    })
     res.json({ saved })
   }
   catch (error) {
@@ -58,7 +63,13 @@ module.exports.login = async (req, res) => {
 }
 
 module.exports.logout = (req, res) => {
-  res.cookie('jwt', ' ', { maxAge: 1 })
+  res.cookie('jwt', ' ', {
+      domain: 'beautiful-zuccutto-f44055.netlify.app',
+      sameSite: 'none',
+      secure: true,
+      httpOnly: true,
+      maxAge:1
+    })
   res.send('logged out')
 }
 // get list of products

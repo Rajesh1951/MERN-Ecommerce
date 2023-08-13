@@ -25,6 +25,8 @@ export default function Login() {
     const { data } = await axios.post(`${domain}/login`, {
       email: credential.email,
       password: credential.password
+    }, {
+     withCredentials: true
     })
     if (data?.error) {
       alert(data?.error)

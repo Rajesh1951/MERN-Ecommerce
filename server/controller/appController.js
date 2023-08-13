@@ -44,10 +44,10 @@ module.exports.login = async (req, res) => {
     const user = await userModel.login(email, password);
     const token = createToken(user._id);
     res.cookie('jwt', token, {
-      sameSite: 'lax',
-      secure: false,
+      sameSite: 'none',
+      secure: true,
       httpOnly: true
-    });
+    });    
     // console.log(token)
     res.json(user);
   }

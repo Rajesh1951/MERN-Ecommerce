@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { addItem } from '../redux/cartSlice'
 import { useDispatch } from 'react-redux'
+import { backend } from '../constants'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -11,7 +12,7 @@ function classNames(...classes) {
 
 export default function ProductView() {
   const { id } = useParams()
-  const domain = 'https://mern-ecommerce-3vx2.onrender.com'
+  const domain = backend
   const [product, setProduct] = useState({
     name: '',
     price: '',

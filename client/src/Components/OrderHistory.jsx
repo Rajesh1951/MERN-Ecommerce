@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 
 import { useParams } from 'react-router-dom';
+import { backend } from '../constants';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -23,12 +24,16 @@ function OrderHistory() {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-  const domain = 'https://mern-ecommerce-3vx2.onrender.com'
+  const domain = backend
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     // Fetch order details from the backend
     axios
-      .get(`${domain}/orders`)
+      .get(`${domain}/orders`, {
+        headers: {
+          Authorisation: `Bearer ${sessionStorage.getItem('jwtToken')}`
+        }
+      })
       .then((response) => {
         setOrders(response.data);
       })
@@ -178,7 +183,7 @@ function OrderHistory() {
                               <div className="flex flex-1 items-end justify-between text-sm">
                                 <div className="text-gray-400">Ratings: <span className='font-bold text-gray-300'>{order.rating}</span>
                                   <ul className='inline'>
-                                    {handleStars(order.rating).map((e,i) => <li key={i} className='inline'>{e}</li>)}
+                                    {handleStars(order.rating).map((e, i) => <li key={i} className='inline'>{e}</li>)}
                                   </ul>
                                 </div>
                               </div>

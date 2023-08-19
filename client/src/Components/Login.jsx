@@ -2,11 +2,11 @@ import { useContext, useState } from "react"
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import MyContext from "../contexts/AuthContext";
-
+import { backend } from "../constants";
 export default function Login() {
   const navigate = useNavigate();
   const { loggedIn } = useContext(MyContext);
-  const domain = 'https://mern-ecommerce-3vx2.onrender.com'
+  const domain = backend;
   const [credential, setCredential] = useState({
     email: '',
     password: ''
@@ -30,11 +30,12 @@ export default function Login() {
       alert(data?.error)
     }
     else {
-      // alert('login succesful')
+      alert('login succesful')
+      sessionStorage.setItem('jwtToken',data);
       loggedIn()
       navigate('/')
     }
-    console.log(data?.error);
+    console.log('data',data);
   }
   return (
     <div className="flex-1 bg-gray-900 mt-16">

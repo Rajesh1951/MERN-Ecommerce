@@ -29,8 +29,8 @@ module.exports.signup = async (req, res) => {
     })
     userData.password = bcrypt.hashSync(userData.password, 10);
     const saved = await userData.save();
-    res.cookie('jwt', createToken(saved._id))
-    res.json({ saved })
+    const token = createToken(saved._id)
+    res.json({ token })
   }
   catch (error) {
     res.json(handleErrors(error))
@@ -43,13 +43,7 @@ module.exports.login = async (req, res) => {
     const { email, password } = req.body;
     const user = await userModel.login(email, password);
     const token = createToken(user._id);
-    res.cookie('jwt', token, {
-      sameSite: 'lax',
-      secure: false,
-      httpOnly: true
-    });
-    // console.log(token)
-    res.json(user);
+    res.json(token);
   }
   catch (error) {
     res.json({ "error": error.message })
@@ -57,7 +51,6 @@ module.exports.login = async (req, res) => {
 }
 
 module.exports.logout = (req, res) => {
-  res.cookie('jwt', ' ', { maxAge: 1 })
   res.send('logged out')
 }
 // get list of products
@@ -99,8 +92,9 @@ module.exports.overview = async (req, res) => {
 
 // get loggedIn status
 module.exports.isLoggedin = async (req, res) => {
-  const token = req.cookies?.jwt;
-  if (token) {
+  const authHeader = req.headers?.authorization;
+  if (authHeader) {
+    const token=authHeader.split(' ')[1]
     jsonwebtoken.verify(token, 'secret', (error, decodeToken) => {
       if (error) {
         console.log(error)
@@ -119,7 +113,7 @@ module.exports.isLoggedin = async (req, res) => {
 // create order
 module.exports.createOrder = async (req, res) => {
   const { orderName, price, productIds, address } = req.body;
-  const { jwt } = req.cookies;
+  const jwt = req.headers.authorisation.split(' ')[1];
   const decodedToken = jsonwebtoken.decode(jwt);
   const id = decodedToken.id;
   const data = new orderModel({
@@ -131,8 +125,9 @@ module.exports.createOrder = async (req, res) => {
 
 module.exports.orders = async (req, res) => {
   try {
-    const { jwt } = req.cookies;
-    const backend = 'https://mern-ecommerce-3vx2.onrender.com'
+    const authHeader = req.headers.authorisation;
+    const jwt = authHeader.split(' ')[1];
+    const backend = 'http://localhost:800'
     const decodedToken = jsonwebtoken.decode(jwt);
     const id = decodedToken.id;
     const ordersList = await orderModel.find({ userId: id });
@@ -153,7 +148,7 @@ module.exports.orders = async (req, res) => {
     const results = await Promise.all(promises);
     res.json(results);
   }
-  catch(error){
+  catch (error) {
     res.json(error)
   }
 };

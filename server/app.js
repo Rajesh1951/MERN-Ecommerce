@@ -18,9 +18,8 @@ app.use(cookieParser())
 app.use(express.urlencoded({ urlencoded: true }));
 
 const corsOptions = {
-  origin: 'https://main--beautiful-zuccutto-f44055.netlify.app',
-  credentials: true,            //access-control-allow-credentials:true
-  optionSuccessStatus: 200
+  origin:"http://localhost:3000",
+  credentials: true,
 }
 app.use(cors(corsOptions));
 

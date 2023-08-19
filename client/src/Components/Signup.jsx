@@ -2,11 +2,12 @@ import { useContext, useState } from "react"
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import MyContext from "../contexts/AuthContext";
+import { backend } from "../constants";
 
 export default function Signup() {
   const navigate = useNavigate();
   const { loggedIn } = useContext(MyContext);
-  const domain = 'https://mern-ecommerce-3vx2.onrender.com'
+  const domain = backend
   const [credential, setCredential] = useState({
     name: '',
     email: '',

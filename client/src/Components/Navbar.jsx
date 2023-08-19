@@ -6,6 +6,7 @@ import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import ProductView from './ProductView'
 import MyContext from '../contexts/AuthContext'
+import { backend } from '../constants'
 
 const navigation = [
   { name: 'Home', href: '/', current: false },
@@ -28,7 +29,7 @@ export default function Navbar() {
       navigate('/login')
       return;
     }
-    axios.get('https://mern-ecommerce-3vx2.onrender.com/logout')
+    sessionStorage.removeItem('jwtToken')
     alert("Logged out!")
     navigate('/')
   }

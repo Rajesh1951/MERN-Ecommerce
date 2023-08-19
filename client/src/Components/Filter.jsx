@@ -4,12 +4,13 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon } from '@heroicons/react/20/solid'
 import ProductList from './ProductList'
 import axios from "axios"
+import { backend } from '../constants'
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function Filter() {
-  const domain = 'https://mern-ecommerce-3vx2.onrender.com'
+  const domain = backend
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const [allProducts, setAllProducts] = useState([])
   const [products, setProducts] = useState([])

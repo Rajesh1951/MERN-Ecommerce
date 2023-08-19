@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { backend } from '../constants';
 
 function Payment() {
-  const domain = 'https://mern-ecommerce-3vx2.onrender.com'
+  const domain = backend;
   const cart = useSelector(store => store.cart.items);
   let price = 100;
   const productIds = cart.map(e => {

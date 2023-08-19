@@ -94,7 +94,7 @@ module.exports.overview = async (req, res) => {
 module.exports.isLoggedin = async (req, res) => {
   const authHeader = req.headers?.authorization;
   if (authHeader) {
-    const token=authHeader.split(' ')[1]
+    const token = authHeader.split(' ')[1]
     jsonwebtoken.verify(token, 'secret', (error, decodeToken) => {
       if (error) {
         console.log(error)
@@ -113,7 +113,8 @@ module.exports.isLoggedin = async (req, res) => {
 // create order
 module.exports.createOrder = async (req, res) => {
   const { orderName, price, productIds, address } = req.body;
-  const jwt = req.headers.authorisation.split(' ')[1];
+  const authHeader = req.headers.authorization;
+  const jwt = authHeader.split(' ')[1];
   const decodedToken = jsonwebtoken.decode(jwt);
   const id = decodedToken.id;
   const data = new orderModel({
@@ -125,11 +126,11 @@ module.exports.createOrder = async (req, res) => {
 
 module.exports.orders = async (req, res) => {
   try {
-    const authHeader = req.headers.authorisation;
+    const authHeader = req.headers.authorization;
     const jwt = authHeader.split(' ')[1];
     const backend = 'https://merncommerce.netlify.app'
     const decodedToken = jsonwebtoken.decode(jwt);
-    const id = decodedToken.id;
+        const id = decodedToken.id;
     const ordersList = await orderModel.find({ userId: id });
     const promises = ordersList.map(async (ele) => {
       const productPromises = ele.productIds.map(async (id) => {
@@ -146,7 +147,7 @@ module.exports.orders = async (req, res) => {
       };
     });
     const results = await Promise.all(promises);
-    res.json(results);
+        res.json(results);
   }
   catch (error) {
     res.json(error)

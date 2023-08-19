@@ -31,7 +31,7 @@ function OrderHistory() {
     axios
       .get(`${domain}/orders`, {
         headers: {
-          Authorisation: `Bearer ${sessionStorage.getItem('jwtToken')}`
+          Authorization: `Bearer ${sessionStorage.getItem('jwtToken')}`
         }
       })
       .then((response) => {
@@ -70,6 +70,8 @@ function OrderHistory() {
     }
     return stars
   }
+  if(orders.length===0)
+    return <h1>Loading ...</h1>
   return (
     <div className='flex-1 bg-gray-900 mt-16'>
       <div className="flex mt-8 max-w-8xl  sm:px-6 lg:px-8">

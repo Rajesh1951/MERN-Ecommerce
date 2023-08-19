@@ -25,7 +25,11 @@ function Payment() {
     })
   }
   async function handlePay() {
-    const result = await axios.post(`${domain}/create`, { ...details, productIds, price })
+    const result = await axios.post(`${domain}/create`, { ...details, productIds, price }, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('jwtToken')}`
+      }
+    })
     alert("Order is Succesfull")
   }
   return (

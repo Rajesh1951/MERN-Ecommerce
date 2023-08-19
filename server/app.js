@@ -18,7 +18,7 @@ app.use(cookieParser())
 app.use(express.urlencoded({ urlencoded: true }));
 
 const corsOptions = {
-  origin: 'https://merncommerce.netlify.app/',
+  origin: ['http://localhost:3000', 'https://merncommerce.netlify.app'],
   credentials: true,            //access-control-allow-credentials:true
   optionSuccessStatus: 200
 }

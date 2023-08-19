@@ -128,7 +128,7 @@ module.exports.orders = async (req, res) => {
   try {
     const authHeader = req.headers.authorization;
     const jwt = authHeader.split(' ')[1];
-    const backend = 'https://merncommerce.netlify.app'
+    const backend = 'https://mern-ecommerce-3vx2.onrender.com'
     const decodedToken = jsonwebtoken.decode(jwt);
         const id = decodedToken.id;
     const ordersList = await orderModel.find({ userId: id });
